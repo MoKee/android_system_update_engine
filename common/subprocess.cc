@@ -46,7 +46,9 @@ namespace {
 
 bool SetupChild(const std::map<string, string>& env, uint32_t flags) {
   // Setup the environment variables.
+#ifdef __linux__
   clearenv();
+#endif
   for (const auto& key_value : env) {
     setenv(key_value.first.c_str(), key_value.second.c_str(), 0);
   }

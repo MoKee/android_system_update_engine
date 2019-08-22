@@ -180,7 +180,7 @@ void MultiRangeHttpFetcher::Reset() {
 }
 
 std::string MultiRangeHttpFetcher::Range::ToString() const {
-  std::string range_str = base::StringPrintf("%jd+", offset());
+  std::string range_str = base::StringPrintf("%lld+", offset());
   if (HasLength())
     range_str += std::to_string(length());
   else
