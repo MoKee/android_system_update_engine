@@ -20,7 +20,11 @@
 
 #include <dirent.h>
 #include <elf.h>
+#ifdef __APPLE__
+#include <machine/endian.h>
+#else
 #include <endian.h>
+#endif
 #include <errno.h>
 #include <fcntl.h>
 #include <stdio.h>
