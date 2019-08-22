@@ -17,7 +17,9 @@
 #include "update_engine/payload_consumer/delta_performer.h"
 
 #include <errno.h>
+#ifdef __linux__
 #include <linux/fs.h>
+#endif
 
 #include <algorithm>
 #include <cstring>
