@@ -47,7 +47,9 @@ namespace {
 
 bool SetupChild(const std::map<string, string>& env, uint32_t flags) {
   // Setup the environment variables.
+#ifdef __linux__
   clearenv();
+#endif
   for (const auto& key_value : env) {
     setenv(key_value.first.c_str(), key_value.second.c_str(), 0);
   }
@@ -107,7 +109,9 @@ void Subprocess::Init(
   CHECK(subprocess_singleton_ == nullptr);
   subprocess_singleton_ = this;
 
+#ifdef __linux__
   process_reaper_.Register(async_signal_handler);
+#endif
 }
 
 Subprocess::~Subprocess() {
@@ -186,10 +190,12 @@ pid_t Subprocess::ExecFlags(const vector<string>& cmd,
   }
 
   pid_t pid = record->proc.pid();
+#ifdef __linux__
   CHECK(process_reaper_.WatchForChild(
       FROM_HERE,
       pid,
       base::Bind(&Subprocess::ChildExitedCallback, base::Unretained(this))));
+#endif
 
   record->stdout_fd = record->proc.GetPipe(STDOUT_FILENO);
   // Capture the subprocess output. Make our end of the pipe non-blocking.

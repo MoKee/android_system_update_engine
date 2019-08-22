@@ -60,7 +60,6 @@ cc_defaults {
         "libbrillo",
         "libchrome",
     ],
-    ldflags: ["-Wl,--gc-sections"],
 
     product_variables: {
         pdk: {
@@ -69,6 +68,9 @@ cc_defaults {
     },
 
     target: {
+        linux: {
+            ldflags: ["-Wl,--gc-sections"],
+        },
         android: {
             cflags: [
                 "-DUSE_FEC=1",
@@ -80,7 +82,21 @@ cc_defaults {
             ],
         },
         darwin: {
-            enabled: false,
+            cflags: [
+                "-Doff64_t=off_t",
+                "-Dlseek64=lseek",
+                "-Dbe16toh=OSSwapBigToHostInt16",
+                "-Dle16toh=OSSwapLittleToHostInt16",
+                "-Dhtobe32=OSSwapHostToBigInt32",
+                "-Dbe32toh=OSSwapBigToHostInt32",
+                "-Dle32toh=OSSwapLittleToHostInt32",
+                "-Dhtobe64=OSSwapHostToBigInt64",
+                "-Dbe64toh=OSSwapBigToHostInt64",
+                "-DCLOCK_BOOTTIME=CLOCK_MONOTONIC",
+                "-DMS_RDONLY=0",
+                "-D_DARWIN_C_SOURCE",
+            ],
+            include_dirs: ["external/elfutils/libelf"],
         },
     },
 }
@@ -723,12 +739,6 @@ cc_prebuilt_binary {
         "shflags",
         "simg2img",
     ],
-
-    target: {
-        darwin: {
-            enabled: false,
-        },
-    },
 }
 
 // AIDL interface between libupdate_engine and the Things jar.
