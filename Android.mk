@@ -149,7 +149,6 @@ ue_libpayload_consumer_src_files := \
     payload_consumer/postinstall_runner_action.cc \
     payload_consumer/xz_extent_writer.cc
 
-ifeq ($(HOST_OS),linux)
 # Build for the host.
 include $(CLEAR_VARS)
 LOCAL_MODULE := libpayload_consumer
@@ -171,7 +170,6 @@ LOCAL_SHARED_LIBRARIES := \
     $(ue_update_metadata_protos_exported_shared_libraries)
 LOCAL_SRC_FILES := $(ue_libpayload_consumer_src_files)
 include $(BUILD_HOST_STATIC_LIBRARY)
-endif  # HOST_OS == linux
 
 # Build for the target.
 include $(CLEAR_VARS)
@@ -655,7 +653,6 @@ ue_libpayload_generator_src_files := \
     payload_generator/topological_sort.cc \
     payload_generator/xz_android.cc
 
-ifeq ($(HOST_OS),linux)
 # Build for the host.
 include $(CLEAR_VARS)
 LOCAL_MODULE := libpayload_generator
@@ -683,7 +680,6 @@ LOCAL_SHARED_LIBRARIES := \
     $(ue_update_metadata_protos_exported_shared_libraries)
 LOCAL_SRC_FILES := $(ue_libpayload_generator_src_files)
 include $(BUILD_HOST_STATIC_LIBRARY)
-endif  # HOST_OS == linux
 
 # Build for the target.
 include $(CLEAR_VARS)
@@ -718,7 +714,6 @@ include $(BUILD_STATIC_LIBRARY)
 ue_delta_generator_src_files := \
     payload_generator/generate_delta_main.cc
 
-ifeq ($(HOST_OS),linux)
 # Build for the host.
 include $(CLEAR_VARS)
 LOCAL_MODULE := delta_generator
@@ -740,7 +735,6 @@ LOCAL_SHARED_LIBRARIES := \
     $(ue_libpayload_generator_exported_shared_libraries)
 LOCAL_SRC_FILES := $(ue_delta_generator_src_files)
 include $(BUILD_HOST_EXECUTABLE)
-endif  # HOST_OS == linux
 
 # Build for the target.
 include $(CLEAR_VARS)
@@ -1021,7 +1015,6 @@ endif  # PRODUCT_IOT
 
 # Brillo update payload generation script
 # ========================================================
-ifeq ($(HOST_OS),linux)
 include $(CLEAR_VARS)
 LOCAL_SRC_FILES := scripts/brillo_update_payload
 LOCAL_MODULE := brillo_update_payload
@@ -1033,6 +1026,5 @@ LOCAL_REQUIRED_MODULES := \
     shflags \
     simg2img
 include $(BUILD_PREBUILT)
-endif  # HOST_OS == linux
 
 endif  # ifneq ($(TARGET_BUILD_PDK),true)

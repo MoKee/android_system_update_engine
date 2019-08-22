@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 
 #
 # Copyright (C) 2015 The Android Open Source Project
@@ -84,7 +84,7 @@ die() {
 # Loads shflags. We first look at the default install location; then look for
 # crosutils (chroot); finally check our own directory (au-generator zipfile).
 load_shflags() {
-  local my_dir="$(dirname "$(readlink -f "$0")")"
+  local my_dir="$(dirname "$(greadlink -f "$0")")"
   local path
   for path in /usr/share/misc {/usr/lib/crosutils,"${my_dir}"}/lib/shflags; do
     if [[ -r "${path}/shflags" ]]; then
